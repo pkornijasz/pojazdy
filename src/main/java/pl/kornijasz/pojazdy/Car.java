@@ -1,6 +1,8 @@
 package pl.kornijasz.pojazdy;
 
-public class Car {
+import org.springframework.hateoas.RepresentationModel;
+
+public class Car extends RepresentationModel<Car> {
     private Long id;
     private String mark;
     private String model;

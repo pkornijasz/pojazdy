@@ -1,6 +1,12 @@
 package pl.kornijasz.pojazdy;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,8 +15,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
 @RestController
-@RequestMapping("/cars")
+@RequestMapping(path = "/cars",
+        produces = {
+//                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_JSON_VALUE})
 public class CarApi {
     private final List<Car> carList;
 
@@ -21,21 +32,32 @@ public class CarApi {
         carList.add(new Car(3L, "Citroen", "Nemo", "Biały"));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Car>> getCarList() {
-        return new ResponseEntity<>(carList, HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<CollectionModel<Car>> getCarList() {
+        carList.forEach(car -> car.removeLinks());
+        carList.forEach(car -> car.add(linkTo(CarApi.class).slash(car.getId()).withSelfRel()));
+        Link link = linkTo(CarApi.class).withSelfRel();
+        CollectionModel<Car> carCollectionModel = CollectionModel.of(carList, link);
+        return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getCarById(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<Car>> getCarById(@PathVariable Long id) {
+        Link link = linkTo(CarApi.class).slash(id).withSelfRel();
         Optional<Car> carById = carList.stream().filter(car -> car.getId().equals(id)).findFirst();
-        return carById.map(car -> new ResponseEntity(car, HttpStatus.OK)).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+        EntityModel<Car> carEntityModel = EntityModel.of(carById.get(), link);
+        return carById.map(car -> new ResponseEntity(carEntityModel, HttpStatus.OK)).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/color/{color}")
-    public ResponseEntity<List<Car>> getCarListByColor(@PathVariable String color) {
+    public ResponseEntity<CollectionModel<Car>> getCarListByColor(@PathVariable String color) {
         List<Car> carsByColor = carList.stream().filter(car -> car.getColor().equals(color)).collect(Collectors.toList());
-        return new ResponseEntity<>(carsByColor, HttpStatus.OK);
+        carsByColor.forEach(car -> car.removeLinks());
+        carsByColor.forEach(car -> car.add(linkTo(CarApi.class).slash(car.getId()).withSelfRel()));
+        carsByColor.forEach(car -> car.add(linkTo(CarApi.class).withRel("allColors")));
+        Link link = linkTo(CarApi.class).withSelfRel();
+        CollectionModel<Car> carCollectionModel = CollectionModel.of(carsByColor, link);
+        return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
     }
 
     @PostMapping
