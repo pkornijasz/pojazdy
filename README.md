@@ -26,7 +26,7 @@ rozbuduj aplikacje o możliwość zwracania danych w postaci XML+
 
 dodaj obsługę Swagger UI+
 
-zaimplementuj HATEOAS
+zaimplementuj HATEOAS+
 
 Zmiany w nowej wersji HATEOAS:
 
