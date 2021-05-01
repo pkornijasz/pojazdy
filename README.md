@@ -28,14 +28,21 @@ dodaj obsługę Swagger UI+
 
 zaimplementuj HATEOAS+
 
-Zmiany w nowej wersji HATEOAS:
-
-ResourceSupport -> RepresentationModel
-
-Resource -> EntityModel
-
-Resources -> CollectionModel
-
 Wywołanie Swagger UI:
 
 http://localhost:8080/swagger-ui.html
+
+
+Rozbuduj swoją aplikacje z poprzedniego tygodnia o interfejs graficzny, który umożliwi:
+
+wyświetlanie wszystkich pozycji+
+
+pobieranie elementu po jego id
+
+dodawanie pozycji
+
+modyfikowanie pozycji
+
+modyfikowanie jednego z pól pozycji
+
+usuwania jednej pozycji

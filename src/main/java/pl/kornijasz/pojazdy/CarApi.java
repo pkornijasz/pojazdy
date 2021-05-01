@@ -1,7 +1,5 @@
 package pl.kornijasz.pojazdy;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping(path = "/cars",
+@RequestMapping(path = "/api/cars",
         produces = {
 //                MediaType.APPLICATION_XML_VALUE,
                 MediaType.APPLICATION_JSON_VALUE})
