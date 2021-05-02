@@ -37,12 +37,12 @@ Rozbuduj swoją aplikacje z poprzedniego tygodnia o interfejs graficzny, który 
 
 wyświetlanie wszystkich pozycji+
 
-pobieranie elementu po jego id
+pobieranie elementu po jego id+
 
-dodawanie pozycji
+dodawanie pozycji+
 
 modyfikowanie pozycji
 
 modyfikowanie jednego z pól pozycji
 
-usuwania jednej pozycji
+usuwania jednej pozycji+

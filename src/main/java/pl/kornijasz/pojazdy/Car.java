@@ -8,6 +8,8 @@ public class Car extends RepresentationModel<Car> {
     private String model;
     private String color;
 
+    public Car() {}
+
     public Car(Long id, String mark, String model, String color) {
         this.id = id;
         this.mark = mark;
@@ -45,5 +47,15 @@ public class Car extends RepresentationModel<Car> {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", mark='" + mark + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

@@ -12,8 +12,28 @@
             <th>Id</th><th>Marka</th><th>Model</th><th>Kolor</th>
         </tr>
         <tr th:each="car: ${cars}">
-            <td th:text="${car.getId()}"></td><td th:text="${car.getMark()}"></td> <td th:text="${car.getModel()}"></td> <td th:text="${car.getColor()}"></td>
+                <td th:text="${car.id}"></td>
+                <td th:text="${car.mark}"></td>
+                <td th:text="${car.model}"></td>
+                <td th:text="${car.color}"></td>
+                <td><a th:href="@{/cars/{id}(id=${car.id})}">Pokaż</a></td>
         </tr>
     </table>
+    <form th:action="@{/add-car}" th:object="${newCar}" method="post">
+        <table>
+            <tr>
+                <td>Marka:</td><td><input type="text" th:field="*{mark}"></td>
+            </tr>
+            <tr>
+                <td>Model:</td><td><input type="text" th:field="*{model}"></td>
+            </tr>
+            <tr>
+                <td>Kolor:</td><td><input type="text" th:field="*{color}"></td>
+            </tr>
+            <tr>
+                <td></td><td><input type="submit" value="Dodaj samochód"></td>
+            </tr>
+        </table>
+    </form>
 </body>
 </html>

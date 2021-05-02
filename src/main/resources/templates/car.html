@@ -6,14 +6,31 @@
     <link th:href="@{/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-  <h1>Samochód</h1>
-    <table>
-        <tr>
-            <th>Id</th><th>Marka</th><th>Model</th><th>Kolor</th>
-        </tr>
-        <tr>
-            <td th:text="${car.getId()}"></td><td th:text="${car.getMark()}"></td><td th:text="${car.getModel()}"></td><td th:text="${car.getColor()}"></td>
-        </tr>
-    </table>
+<h1>Samochód</h1>
+<table th:if="${car}">
+    <tr>
+        <th>Id</th>
+        <th>Marka</th>
+        <th>Model</th>
+        <th>Kolor</th>
+    </tr>
+    <tr>
+        <td th:text="${car.getId()}"></td>
+        <td th:text="${car.mark}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.color}"></td>
+        <td><a class="warning" th:href="@{/remove-car/{id}(id=${car.id})}">Kasuj</a></td>
+    </tr>
+    <tr>
+        <form th:action="@{/modify-car/{id}(id=${car.id})}" th:object="${car}" method="post">
+            <td></td>
+            <td><input th:type="text" th:field="*{mark}"></td>
+            <td><input th:type="text" th:field="*{model}"></td>
+            <td><input th:type="text" th:field="*{color}"></td>
+            <td><input type="submit" value="Zmień dane samochodu"></td>
+        </form>
+    </tr>
+</table>
+<p class="warning" th:if="!${car}">Brak samochodu o podanym Id</p>
 </body>
 </html>
